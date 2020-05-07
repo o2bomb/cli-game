@@ -68,4 +68,8 @@ public abstract class Character {
     public int getMaxHealth() {
         return maxHealth;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

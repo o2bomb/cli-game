@@ -19,7 +19,7 @@ public class Player extends Character {
 		// - maxDefence: <from starter armour>
 		super(name, 30, 30, 100);
 		inventory = new LinkedList<Item>();
-		equippedWeapon = new Weapon("Wooden sword", 5, 3, 5, "poking", "Sword");
+		equippedWeapon = new BaseWeapon("Wooden sword", 5, 3, 5, "poking", "Sword");
 		equippedArmour = new Armour("T-shirt", 5, "Cloth", 2, 5);
 	}
 	
@@ -45,6 +45,20 @@ public class Player extends Character {
 
 	public void addItem(Item item) {
 		inventory.add(item);
+	}
+
+	/**
+	 * Replace the currently equipped weapon with the indicated weapon. If
+	 * the weapon does not exist within the inventory, throw an exception. Else,
+	 * put the currently equpped weapon into the inventory and equip the new weapon
+	 */
+	public void selectWeapon(Weapon weapon) throws NoSuchElementException {
+		if(!inventory.contains(weapon)) {
+			throw new NoSuchElementException();
+		}
+		inventory.add(equippedWeapon);
+		inventory.remove(weapon);
+		equippedWeapon = weapon;
 	}
 
 	/**

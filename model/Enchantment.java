@@ -1,6 +1,6 @@
 package model;
 
-public abstract class Enchantment implements WeaponInterface {
+public abstract class Enchantment implements Weapon {
     protected Weapon next;
 
     public Enchantment(Weapon next) {
@@ -30,5 +30,10 @@ public abstract class Enchantment implements WeaponInterface {
     @Override
     public String getDamageType() {
         return next.getDamageType();
+    }
+
+    @Override
+    public String getDisplayName() {
+        return next.getDisplayName();
     }
 }
