@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import javax.naming.InsufficientResourcesException;
+
 public class Player extends Character {
 	private List<Item> inventory;
 	private Weapon equippedWeapon;
@@ -35,6 +37,30 @@ public class Player extends Character {
 		return inventory;
 	}
 
+	public List<Weapon> getWeapons() {
+		List<Weapon> weapons = new LinkedList<>();
+		for(Item i : inventory) {
+			if(i instanceof Weapon) {
+				Weapon w = (Weapon)i;
+				weapons.add(w);
+			}
+		}
+
+		return weapons;
+	}
+
+	public List<Armour> getArmours() {
+		List<Armour> armours = new LinkedList<>();
+		for(Item i : inventory) {
+			if(i instanceof Armour) {
+				Armour w = (Armour)i;
+				armours.add(w);
+			}
+		}
+
+		return armours;
+	}
+
 	public Weapon getEquippedWeapon() {
 		return equippedWeapon;
 	}
@@ -45,6 +71,19 @@ public class Player extends Character {
 
 	public void addItem(Item item) {
 		inventory.add(item);
+	}
+
+	public void addEnchantmentToEquippedWeapon(Enchantment enchantment) {
+		enchantment.setNext(equippedWeapon);
+		Weapon enchantedWeapon = enchantment;
+		this.equippedWeapon = enchantedWeapon;
+	}
+
+	public void payGold(int amount) throws InsufficientResourcesException {
+		if(getGold() - amount < 0) {
+			throw new InsufficientResourcesException("Player does not have enough gold");
+		}
+		minusGold(amount);
 	}
 
 	/**
@@ -59,6 +98,20 @@ public class Player extends Character {
 		inventory.add(equippedWeapon);
 		inventory.remove(weapon);
 		equippedWeapon = weapon;
+	}
+
+	/**
+	 * Replace the currently equipped armour with the indicated armour. If
+	 * the armour does not exist within the inventory, throw an exception. Else,
+	 * put the currently equpped armour into the inventory and equip the new armour
+	 */
+	public void selectArmour(Armour armour) throws NoSuchElementException {
+		if(!inventory.contains(armour)) {
+			throw new NoSuchElementException();
+		}
+		inventory.add(equippedArmour);
+		inventory.remove(armour);
+		equippedArmour = armour;
 	}
 
 	/**

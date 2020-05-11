@@ -11,8 +11,19 @@ public class Menu implements MenuEntry {
         entries = new ArrayList<>();
     }
 
+    public Menu(String description, Menu prevMenu) {
+        this.description = description;
+        entries = new ArrayList<>();
+        prevMenu.setDescription("Go back");
+        entries.add(prevMenu);
+    }
+
     public MenuEntry getEntry(int index) {
         return entries.get(index);
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void addEntry(MenuEntry e) {
@@ -21,10 +32,6 @@ public class Menu implements MenuEntry {
 
     public void removeEntry(int index) {
         entries.remove(index);
-    }
-
-    public void select(int index) {
-        entries.get(index).doAction();
     }
 
     public String display() {
@@ -43,6 +50,24 @@ public class Menu implements MenuEntry {
 
     @Override
     public void doAction() {
-        System.out.println(display());
+        Scanner sc = new Scanner(System.in);
+        while(true) {
+            try {
+                System.out.println("Select an action:");
+                System.out.println(display());
+                int choice = sc.nextInt();
+                entries.get(choice).doAction();
+                break;
+            } catch(IndexOutOfBoundsException e) {
+                System.out.println("Your choice does not exist: " + e.getMessage());
+            } catch(InputMismatchException e) {
+                System.out.println("Your choice must be a number: " + e.getMessage());
+            } catch(NoSuchElementException e) {
+                System.out.println("Your name cannot be empty: " + e.getMessage());
+            } catch(IllegalStateException e) {
+                System.out.println("Choice scanner failed. Please try again: " + e.getMessage());
+            }
+        }
+        sc.close();
     }
 }

@@ -72,4 +72,14 @@ public abstract class Character {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void minusGold(int amount) {
+        this.gold -= amount;
+        if(this.gold < 0)
+            this.gold = 0;
+    }
+
+    public void addGold(int amount) {
+        this.gold += amount;
+    }
 }

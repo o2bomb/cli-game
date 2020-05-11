@@ -10,4 +10,9 @@ public class Fire extends Enchantment {
         int addedDamage = (int)(Math.random() * 10 + 5);
         return next.getEffect() + addedDamage;
     }
+
+    @Override
+    public int getCost() {
+        return next.getCost() + 20;
+    }
 }

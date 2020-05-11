@@ -46,6 +46,6 @@ public class BaseWeapon implements Weapon {
     
     @Override
     public String getDisplayName() {
-        return String.format("%s(%s)[%s]", getName(), getType(), getDamageType());
+        return String.format("%s (%s)[%s]", getName(), getType(), getDamageType());
     }
 }

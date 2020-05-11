@@ -9,4 +9,9 @@ public class DamageUp extends Enchantment {
     public int getEffect() {
         return next.getEffect() + 2;
     }
+
+    @Override
+    public int getCost() {
+        return next.getCost() + 5;
+    }
 }

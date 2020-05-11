@@ -3,7 +3,15 @@ package model;
 public abstract class Enchantment implements Weapon {
     protected Weapon next;
 
+    public Enchantment() {
+        this.next = new BaseWeapon("", 0, 1, 1, "null", "null");
+    }
+
     public Enchantment(Weapon next) {
+        this.next = next;
+    }
+
+    public void setNext(Weapon next) {
         this.next = next;
     }
 

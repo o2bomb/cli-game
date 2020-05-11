@@ -34,4 +34,9 @@ public class Armour implements Item {
     public String getMaterial() {
         return material;
     }
+
+    @Override
+    public String getDisplayName() {
+        return String.format("%s (%s)", getName(), getMaterial());
+    }
 }
