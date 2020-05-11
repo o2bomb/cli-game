@@ -25,7 +25,6 @@ public class ChoosePlayerName implements MenuEntry {
                 break;
             } catch(NoSuchElementException e) {
                 System.out.println("Your name cannot be empty: " + e.getMessage());
-
             } catch(IllegalStateException e) {
                 System.out.println("Name scanner failed. Please try again: " + e.getMessage());
             }

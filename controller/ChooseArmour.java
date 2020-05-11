@@ -10,8 +10,8 @@ import view.MenuEntry;
 public class ChooseArmour extends Menu {
     private Player player;
 
-    public ChooseArmour(Player player) {
-        super("Choose armour");
+    public ChooseArmour(Player player, Menu prevMenu) {
+        super("Choose armour", prevMenu);
         this.player = player;
         for(Armour a : player.getArmours()) {
             addEntry(new ChooseArmourEntry(a));

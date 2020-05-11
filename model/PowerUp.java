@@ -1,6 +1,10 @@
 package model;
 
 public class PowerUp extends Enchantment {
+    public PowerUp() {
+        super();
+    }
+
     public PowerUp(Weapon next) {
         super(next);
     }

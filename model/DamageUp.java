@@ -1,6 +1,10 @@
 package model;
 
 public class DamageUp extends Enchantment {
+    public DamageUp() {
+        super();
+    }
+
     public DamageUp(Weapon next) {
         super(next);
     }

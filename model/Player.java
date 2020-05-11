@@ -45,7 +45,6 @@ public class Player extends Character {
 				weapons.add(w);
 			}
 		}
-
 		return weapons;
 	}
 
@@ -53,11 +52,10 @@ public class Player extends Character {
 		List<Armour> armours = new LinkedList<>();
 		for(Item i : inventory) {
 			if(i instanceof Armour) {
-				Armour w = (Armour)i;
-				armours.add(w);
+				Armour a = (Armour)i;
+				armours.add(a);
 			}
 		}
-
 		return armours;
 	}
 

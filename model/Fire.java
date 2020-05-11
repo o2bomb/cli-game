@@ -1,6 +1,10 @@
 package model;
 
 public class Fire extends Enchantment {
+    public Fire() {
+        super();
+    }
+
     public Fire(Weapon next) {
         super(next);
     }

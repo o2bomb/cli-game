@@ -8,6 +8,7 @@ import javax.naming.InsufficientResourcesException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
 public class Shop {
     private ArrayList<Item> stock;
@@ -21,11 +22,27 @@ public class Shop {
         return Collections.unmodifiableList(stock);
     }
 
+    public List<Enchantment> getEnchantments() {
+        List<Enchantment> enchantments = new LinkedList<>();
+        for(Item i : stock) {
+            if(i instanceof Enchantment) {
+                Enchantment e = (Enchantment)i;
+                enchantments.add(e);
+            }
+        }
+        return enchantments;    
+    }
+
     public void loadInStock(String source) {
         ShopLoader loader = ShopFactory.makeLoader(source);
-
         try {
+            // Load items in from external source
             stock = loader.readItems();
+            // Load default enchantments in
+            stock.add(new DamageUp());
+            stock.add(new DamageUltra());
+            stock.add(new Fire());
+            stock.add(new PowerUp());
         } catch (IOException e) {
             System.out.println("Failed to load items into shop: " + e.getMessage());
         }
@@ -35,9 +52,9 @@ public class Shop {
      * Handles the selling of the specified item to the player. If the item is not in stock,
      * a NoSuchElementException is thrown. If the player does not have enough gold, the 
      * transaction fails
-     * @param item
-     * @param player
-     * @throws NoSuchElementException
+     * @param item The chosen item
+     * @param player The player instance
+     * @throws NoSuchElementException When the shop doesn't have the item
      */
     public void sellToPlayer(Item item, Player player) throws NoSuchElementException {
         if(!stock.contains(item)) {
@@ -61,9 +78,9 @@ public class Shop {
     /**
      * Handles the buying of an item from the player. If the item does not exist in the 
      * player's inventory, a NoSuchElementException is thrown
-     * @param item
-     * @param player
-     * @throws NoSuchElementException
+     * @param item The chosen item
+     * @param player The player instance
+     * @throws NoSuchElementException When the player doesn't own that item
      */
     public void buyFromPlayer(Item item, Player player) throws NoSuchElementException {
         if(!player.getInventory().contains(item)) {
