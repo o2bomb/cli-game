@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import model.Armour;
 import model.Player;
@@ -31,7 +32,7 @@ public class ChooseArmour extends Menu {
         }
 
         @Override
-        public void doAction() {
+        public void doAction(Scanner sc) {
             try {
                 player.selectArmour(armour);
             } catch (NoSuchElementException e) {

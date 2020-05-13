@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Scanner;
+
 import model.Player;
 import model.Shop;
 import view.Menu;
@@ -23,12 +25,14 @@ public class Game {
     }
 
     private void displayMenus() {
+        Scanner sc = new Scanner(System.in);
         Menu menu = new Menu("Base menu");
         menu.addEntry(new ExitGame(this));
         menu.addEntry(new GoToShop(shop, player, menu));
-        menu.addEntry(new ChoosePlayerName(player, menu));
+        menu.addEntry(new ChoosePlayerName(player));
         menu.addEntry(new ChooseWeapon(player, menu));
         menu.addEntry(new ChooseArmour(player, menu));
-        menu.doAction();
+        menu.doAction(sc);
+        sc.close();
     }
 }

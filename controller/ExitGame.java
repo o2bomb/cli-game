@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Scanner;
+
 import view.MenuEntry;
 
 public class ExitGame implements MenuEntry {
@@ -15,7 +17,7 @@ public class ExitGame implements MenuEntry {
     }
 
     @Override
-    public void doAction() {
+    public void doAction(Scanner sc) {
         game.endGame();
     }
     

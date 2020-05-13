@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 import model.Enchantment;
 import model.Item;
@@ -43,7 +44,7 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction() {
+            public void doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(item, player);
                 } catch(NoSuchElementException e) {
@@ -74,7 +75,7 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction() {
+            public void doAction(Scanner sc) {
                 try {
                     shop.buyFromPlayer(item, player);
                 } catch(NoSuchElementException e) {
@@ -105,7 +106,7 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction() {
+            public void doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(enchantment, player);
                 } catch(NoSuchElementException e) {
@@ -113,6 +114,5 @@ public class GoToShop extends Menu {
                 }
             }
         }
-
     }
 }

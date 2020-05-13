@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Scanner;
+
 import view.MenuEntry;
 
 public class GoBack implements MenuEntry {
@@ -10,8 +12,8 @@ public class GoBack implements MenuEntry {
     }
 
     @Override
-    public void doAction() {
-        prevMenu.doAction();
+    public void doAction(Scanner sc) {
+        prevMenu.doAction(sc);
     }
 
     @Override

@@ -39,7 +39,10 @@ public class Menu implements MenuEntry {
         String display = new String();
         for(int i = 0; i < entries.size(); i++) {
             MenuEntry e = entries.get(i);
-            display += String.format("[%d] %s\n", i, e.getDescription());
+            display += String.format("[%d] %s", i, e.getDescription());
+            if(i != entries.size() - 1) {
+                display += "\n";
+            }
         }
         return display;
     }
@@ -50,22 +53,19 @@ public class Menu implements MenuEntry {
     }
 
     @Override
-    public void doAction() {
+    public void doAction(Scanner sc) {
         while(true) {
-            Scanner sc = new Scanner(System.in);
             System.out.println("Select an action:");
             System.out.println(display());
             try {
-                int choice = sc.nextInt();
-                entries.get(choice).doAction();
-                sc.close();
-                break;
+                int choice = Integer.parseInt(sc.nextLine());
+                entries.get(choice).doAction(sc);
             } catch(IndexOutOfBoundsException e) {
                 System.out.println("Your choice does not exist.");
-            } catch(InputMismatchException e) {
+            } catch(NumberFormatException e) {
                 System.out.println("Your choice must be a number.");
             } catch(NoSuchElementException e) {
-                System.out.println("Your name cannot be empty.");
+                System.out.println("Your choice cannot be empty.");
             } catch(IllegalStateException e) {
                 System.out.println("Choice scanner failed. Please try again: " + e.getMessage());
             }
