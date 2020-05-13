@@ -27,11 +27,15 @@ public class FileLoader implements ShopLoader {
             String line = reader.readLine();
             while (line != null) {
                 String[] parts = line.split(",");
+                // Trim leading and trailing whitespace from each part
+                for(int i = 0; i < parts.length; i++) {
+                    parts[i] = parts[i].trim();
+                }
                 char identifier = Character.toLowerCase(parts[0].charAt(0));
 
                 Item newItem = null;
                 switch(identifier) {
-                    case 'W':
+                    case 'w':
                         String wName =  parts[1];
                         int minDamage = Integer.parseInt(parts[2]);
                         int maxDamage = Integer.parseInt(parts[3]);
@@ -41,7 +45,7 @@ public class FileLoader implements ShopLoader {
 
                         newItem = new BaseWeapon(wName, wCost, minDamage, maxDamage, weaponType, damageType);
                         break;
-                    case 'A':
+                    case 'a':
                         String aName =  parts[1];
                         int minDefence = Integer.parseInt(parts[2]);
                         int maxDefence = Integer.parseInt(parts[3]);
@@ -50,7 +54,7 @@ public class FileLoader implements ShopLoader {
 
                         newItem = new Armour(aName, aCost, material, minDefence, maxDefence);
                         break;
-                    case 'P':
+                    case 'p':
                         String pName =  parts[1];
                         int minEffect = Integer.parseInt(parts[2]);
                         int maxEffect = Integer.parseInt(parts[3]);

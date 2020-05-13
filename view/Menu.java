@@ -2,6 +2,8 @@ package view;
 
 import java.util.*;
 
+import controller.GoBack;
+
 public class Menu implements MenuEntry {
     private String description;
     private ArrayList<MenuEntry> entries;
@@ -11,11 +13,10 @@ public class Menu implements MenuEntry {
         entries = new ArrayList<>();
     }
 
-    public Menu(String description, Menu prevMenu) {
+    public Menu(String description, MenuEntry prevMenu) {
         this.description = description;
         entries = new ArrayList<>();
-        prevMenu.setDescription("Go back");
-        entries.add(prevMenu);
+        entries.add(new GoBack(prevMenu));
     }
 
     public MenuEntry getEntry(int index) {
@@ -50,24 +51,24 @@ public class Menu implements MenuEntry {
 
     @Override
     public void doAction() {
-        Scanner sc = new Scanner(System.in);
         while(true) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Select an action:");
+            System.out.println(display());
             try {
-                System.out.println("Select an action:");
-                System.out.println(display());
                 int choice = sc.nextInt();
                 entries.get(choice).doAction();
+                sc.close();
                 break;
             } catch(IndexOutOfBoundsException e) {
-                System.out.println("Your choice does not exist: " + e.getMessage());
+                System.out.println("Your choice does not exist.");
             } catch(InputMismatchException e) {
-                System.out.println("Your choice must be a number: " + e.getMessage());
+                System.out.println("Your choice must be a number.");
             } catch(NoSuchElementException e) {
-                System.out.println("Your name cannot be empty: " + e.getMessage());
+                System.out.println("Your name cannot be empty.");
             } catch(IllegalStateException e) {
                 System.out.println("Choice scanner failed. Please try again: " + e.getMessage());
             }
         }
-        sc.close();
     }
 }

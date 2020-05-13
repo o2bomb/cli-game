@@ -14,15 +14,21 @@ public class Game {
     }
 
     public void startGame() {
-        displayMenus();
         shop.loadInStock("shop.txt");
+        displayMenus();
+    }
+
+    public void endGame() {
+        System.exit(0);
     }
 
     private void displayMenus() {
         Menu menu = new Menu("Base menu");
+        menu.addEntry(new ExitGame(this));
         menu.addEntry(new GoToShop(shop, player, menu));
-        menu.addEntry(new ChoosePlayerName(player));
+        menu.addEntry(new ChoosePlayerName(player, menu));
         menu.addEntry(new ChooseWeapon(player, menu));
+        menu.addEntry(new ChooseArmour(player, menu));
         menu.doAction();
     }
 }

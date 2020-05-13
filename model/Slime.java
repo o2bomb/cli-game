@@ -20,11 +20,6 @@ public class Slime extends Enemy {
         super(name, maxHealth, currHealth, gold, probability, minDamage, maxDamage, minDefence, maxDefence);
     }
 
-    @Override
-    public void doDefend(int damage) {
-        // TODO Auto-generated method stub
-    }
-
     /**
      * There is a 20% chance that the attack will miss (have no damage)
      */

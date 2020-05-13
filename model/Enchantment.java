@@ -3,8 +3,8 @@ package model;
 public abstract class Enchantment implements Weapon {
     protected Weapon next;
 
-    public Enchantment() {
-        this.next = new BaseWeapon("", 0, 1, 1, "null", "null");
+    public Enchantment(String name) {
+        this.next = new BaseWeapon(name, 0, 1, 1, "Enchantment", "");
     }
 
     public Enchantment(Weapon next) {

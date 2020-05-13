@@ -38,12 +38,12 @@ public class Potion implements Item {
     @Override
     public String getDisplayName() {
         String typeName = "Mundane";
-        if(type == 'H' ) {
+        if(type == 'h' ) {
             typeName = "Healing";
-        } else if(type == 'D') {
+        } else if(type == 'd') {
             typeName = "Damaging";
         }
 
-        return String.format("%s (%s)", name, typeName);
+        return String.format("%s [%s]", name, typeName);
     }
 }
