@@ -19,4 +19,9 @@ public class Fire extends Enchantment {
     public int getCost() {
         return next.getCost() + 20;
     }
+
+    @Override
+    public String getDisplayName() {
+        return next.getDisplayName() + "<Fire Damage>";
+    }
 }

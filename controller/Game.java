@@ -26,13 +26,17 @@ public class Game {
 
     private void displayMenus() {
         Scanner sc = new Scanner(System.in);
-        Menu menu = new Menu("Base menu");
+        Menu menu = new Menu("Base menu", this);
         menu.addEntry(new ExitGame(this));
-        menu.addEntry(new GoToShop(shop, player, menu));
+        menu.addEntry(new GoToShop(shop, this, menu));
         menu.addEntry(new ChoosePlayerName(player));
-        menu.addEntry(new ChooseWeapon(player, menu));
-        menu.addEntry(new ChooseArmour(player, menu));
+        menu.addEntry(new ChooseWeapon(this, menu));
+        menu.addEntry(new ChooseArmour(this, menu));
         menu.doAction(sc);
         sc.close();
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }

@@ -2,20 +2,24 @@ package view;
 
 import java.util.*;
 
+import controller.Game;
 import controller.GoBack;
 
 public class Menu implements MenuEntry {
     private String description;
     private ArrayList<MenuEntry> entries;
+    private Game game;
 
-    public Menu(String description) {
+    public Menu(String description, Game game) {
         this.description = description;
         entries = new ArrayList<>();
+        this.game = game;
     }
 
-    public Menu(String description, MenuEntry prevMenu) {
+    public Menu(String description, Game game, MenuEntry prevMenu) {
         this.description = description;
         entries = new ArrayList<>();
+        this.game = game;
         entries.add(new GoBack(prevMenu));
     }
 
@@ -31,6 +35,10 @@ public class Menu implements MenuEntry {
         entries.add(e);
     }
 
+    public void removeEntry(int index) {
+        entries.remove(index);
+    }
+
     /**
      * Replaces the current entry list with the new entries.
      * @param entries The new list of entries
@@ -42,15 +50,16 @@ public class Menu implements MenuEntry {
         this.entries = temp;
     }
 
-    public void removeEntry(int index) {
-        entries.remove(index);
-    }
-
     /**
      * Generates a displayable string that represents the Menu object
+     * Example:
+     *  [0] Exit
+     *  [1] Choice 1
+     *  [2] Choice 2
+     *  [3] Choice 3
      * @return
      */
-    public String display() {
+    public String displayMenu() {
         String display = new String();
         for(int i = 0; i < entries.size(); i++) {
             MenuEntry e = entries.get(i);
@@ -62,6 +71,27 @@ public class Menu implements MenuEntry {
         return display;
     }
 
+    public String displayPlayerInfo() {
+        String display = new String();
+        display += "========================= PLAYER STATS =========================\n";
+        display += String.format("Name: %s\n", game.getPlayer().getName());
+        display += String.format("Health: %d / %d\n", game.getPlayer().getCurrHealth(), game.getPlayer().getMaxHealth());
+        display += String.format("Gold: %d\n", game.getPlayer().getGold());
+        display += String.format("Equipped Weapon: %s\n", game.getPlayer().getEquippedWeapon().getDisplayName());
+        display += String.format("Equipped Armour: %s\n", game.getPlayer().getEquippedArmour().getDisplayName());
+        display += "================================================================\n";
+
+        return display;
+    }
+
+    /**
+     * Clears the console
+     */
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
     @Override
     public String getDescription() {
         return description;
@@ -71,9 +101,11 @@ public class Menu implements MenuEntry {
     public void doAction(Scanner sc) {
         while(true) {
             System.out.println("Select an action:");
-            System.out.println(display());
+            System.out.println(displayMenu());
+            System.out.println(displayPlayerInfo());
             try {
                 int choice = Integer.parseInt(sc.nextLine());
+                clearScreen();
                 entries.get(choice).doAction(sc);
             } catch(IndexOutOfBoundsException e) {
                 System.out.println("Your choice does not exist.");

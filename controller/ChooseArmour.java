@@ -13,9 +13,9 @@ import view.MenuEntry;
 public class ChooseArmour extends Menu implements PlayerObserver {
     private Player player;
 
-    public ChooseArmour(Player player, Menu prevMenu) {
-        super("Choose armour", prevMenu);
-        this.player = player;
+    public ChooseArmour(Game game, Menu prevMenu) {
+        super("Choose armour", game, prevMenu);
+        this.player = game.getPlayer();
         player.addObserver(this);
         for(Armour a : player.getArmours()) {
             addEntry(new ChooseArmourEntry(a));

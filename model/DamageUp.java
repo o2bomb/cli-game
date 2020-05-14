@@ -18,4 +18,9 @@ public class DamageUp extends Enchantment {
     public int getCost() {
         return next.getCost() + 5;
     }
+
+    @Override
+    public String getDisplayName() {
+        return next.getDisplayName() + "<Damage +2>";
+    }
 }

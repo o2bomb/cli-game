@@ -16,18 +16,18 @@ public class GoToShop extends Menu {
     private Shop shop;
     private Player player;
 
-    public GoToShop(Shop shop, Player player, Menu prevMenu) {
-        super("Go to shop", prevMenu);
+    public GoToShop(Shop shop, Game game, Menu prevMenu) {
+        super("Go to shop", game, prevMenu);
         this.shop = shop;
-        this.player = player;
-        addEntry(new PurchaseAnItem(this));
-        addEntry(new SellAnItem(this));
-        addEntry(new AddEnchantment(this));
+        this.player = game.getPlayer();
+        addEntry(new PurchaseAnItem(game, this));
+        addEntry(new SellAnItem(game, this));
+        addEntry(new AddEnchantment(game, this));
     }
 
     private class PurchaseAnItem extends Menu {
-        public PurchaseAnItem(Menu prevMenu) {
-            super("Purchase an item", prevMenu);
+        public PurchaseAnItem(Game game, Menu prevMenu) {
+            super("Purchase an item", game, prevMenu);
             for(Item i : shop.getStock()) {
                 addEntry(new PurchaseItemEntry(i));
             }
@@ -57,8 +57,8 @@ public class GoToShop extends Menu {
     }
 
     private class SellAnItem extends Menu implements PlayerObserver {
-        public SellAnItem(Menu prevMenu) {
-            super("Sell an item", prevMenu);
+        public SellAnItem(Game game, Menu prevMenu) {
+            super("Sell an item", game, prevMenu);
             player.addObserver(this);
             for(Item i : player.getInventory()) {
                 addEntry(new SellItemEntry(i));
@@ -98,8 +98,8 @@ public class GoToShop extends Menu {
     }
 
     private class AddEnchantment extends Menu {
-        public AddEnchantment(Menu prevMenu) {
-            super("Add enchantment to weapon", prevMenu);
+        public AddEnchantment(Game game, Menu prevMenu) {
+            super("Add enchantment to weapon", game, prevMenu);
             for(Enchantment e : shop.getEnchantments()) {
                 addEntry(new AddEnchantmentEntry(e));
             }

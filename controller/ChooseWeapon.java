@@ -13,9 +13,9 @@ import view.MenuEntry;
 public class ChooseWeapon extends Menu implements PlayerObserver {
     private Player player;
 
-    public ChooseWeapon(Player player, Menu prevMenu) {
-        super("Choose weapon", prevMenu);
-        this.player = player;
+    public ChooseWeapon(Game game, Menu prevMenu) {
+        super("Choose weapon", game, prevMenu);
+        this.player = game.getPlayer();
         player.addObserver(this);
         for(Weapon w : player.getWeapons()) {
             addEntry(new ChooseWeaponEntry(w));

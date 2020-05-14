@@ -18,4 +18,9 @@ public class PowerUp extends Enchantment {
     public int getCost() {
         return next.getCost() + 10;
     }
+
+    @Override
+    public String getDisplayName() {
+        return next.getDisplayName() + "<Power-Up>";
+    }
 }

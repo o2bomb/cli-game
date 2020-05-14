@@ -24,7 +24,7 @@ public class Player extends Character {
 		// - maxDefence: <from starter armour>
 		super(name, 30, 30, 100);
 		inventory = new LinkedList<Item>();
-		equippedWeapon = new BaseWeapon("Wooden sword", 5, 3, 5, "poking", "Sword");
+		equippedWeapon = new BaseWeapon("Wooden sword", 5, 3, 5, "Sword", "Poking");
 		equippedArmour = new Armour("T-shirt", 5, "Cloth", 2, 5);
 		observers = new HashSet<>();
 	}
