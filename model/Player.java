@@ -23,7 +23,7 @@ public class Player extends Character {
         // - minDefence: <from starter armour>
 		// - maxDefence: <from starter armour>
 		super(name, 30, 30, 100);
-		inventory = new LinkedList<Item>();
+		inventory = new LinkedList<>();
 		equippedWeapon = new BaseWeapon("Wooden sword", 5, 3, 5, "Sword", "Poking");
 		equippedArmour = new Armour("T-shirt", 5, "Cloth", 2, 5);
 		observers = new HashSet<>();
@@ -31,7 +31,7 @@ public class Player extends Character {
 	
     public Player(String name, int maxHealth, int currHealth, int gold, Weapon weapon, Armour armour) throws NullPointerException {
 		super(name, maxHealth, currHealth, gold);
-		inventory = new LinkedList<Item>();
+		inventory = new LinkedList<>();
 		// Throws NullPointerException if weapon or armour is null
 		equippedWeapon = Objects.requireNonNull(weapon);
 		equippedArmour = Objects.requireNonNull(armour);
@@ -42,6 +42,10 @@ public class Player extends Character {
 		return inventory;
 	}
 
+	/**
+	 * Gets all the weapons currently in the player's inventory (excluding equipped)
+	 * @return Weapons from the player's inventory
+	 */
 	public List<Weapon> getWeapons() {
 		List<Weapon> weapons = new LinkedList<>();
 		for(Item i : inventory) {
@@ -53,6 +57,10 @@ public class Player extends Character {
 		return weapons;
 	}
 
+	/**
+	 * Gets all the armours currently in the player's inventory (excluding equipped)
+	 * @return Armour from the player's inventory
+	 */
 	public List<Armour> getArmours() {
 		List<Armour> armours = new LinkedList<>();
 		for(Item i : inventory) {
@@ -62,6 +70,32 @@ public class Player extends Character {
 			}
 		}
 		return armours;
+	}
+
+	public int damagingPotionCount() {
+		int count = 0;
+		for(Item i : inventory) {
+			if(i instanceof Potion) {
+				Potion p = (Potion)i;
+				if(p.getType() == 'd') {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	public int healingPotionCount() {
+		int count = 0;
+		for(Item i : inventory) {
+			if(i instanceof Potion) {
+				Potion p = (Potion)i;
+				if(p.getType() == 'h') {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
 	public Weapon getEquippedWeapon() {

@@ -1,5 +1,7 @@
 package model;
 
+import java.lang.Character;
+
 public class Potion implements Item {
     private String name;
     private char type;
@@ -9,7 +11,7 @@ public class Potion implements Item {
 
     public Potion(String name, int cost, int minEffect, int maxEffect, char type) {
         this.name = name;
-        this.type = type;
+        this.type = Character.toLowerCase(type);
         this.cost = cost;
         this.minEffect = minEffect;
         this.maxEffect = maxEffect;

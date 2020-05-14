@@ -42,7 +42,7 @@ public class GoToShop extends Menu {
 
             @Override
             public String getDescription() {
-                return item.getDisplayName();
+                return String.format("%s || %dg", item.getDisplayName(), item.getCost());
             }
 
             @Override
@@ -83,7 +83,7 @@ public class GoToShop extends Menu {
 
             @Override
             public String getDescription() {
-                return item.getDisplayName();
+                return String.format("%s || %dg", item.getDisplayName(), item.getCost() / 2);
             }
 
             @Override
@@ -114,7 +114,7 @@ public class GoToShop extends Menu {
 
             @Override
             public String getDescription() {
-                return enchantment.getDisplayName();
+                return String.format("%s || %dg", enchantment.getDisplayName(), enchantment.getCost());
             }
 
             @Override

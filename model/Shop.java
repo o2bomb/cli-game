@@ -8,13 +8,14 @@ import javax.naming.InsufficientResourcesException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
 public class Shop {
     private ArrayList<Item> stock;
+    private ArrayList<Enchantment> enchantments;
 
     public Shop() {
         this.stock = new ArrayList<>();
+        this.enchantments = new ArrayList<>();
     }
 
     public List<Item> getStock() {
@@ -23,14 +24,7 @@ public class Shop {
     }
 
     public List<Enchantment> getEnchantments() {
-        List<Enchantment> enchantments = new LinkedList<>();
-        for(Item i : stock) {
-            if(i instanceof Enchantment) {
-                Enchantment e = (Enchantment)i;
-                enchantments.add(e);
-            }
-        }
-        return enchantments;    
+        return Collections.unmodifiableList(enchantments);
     }
 
     public void loadInStock(String source) {
@@ -39,10 +33,10 @@ public class Shop {
             // Load items in from external source
             stock = loader.readItems();
             // Load default enchantments in
-            stock.add(new DamageUp());
-            stock.add(new DamageUltra());
-            stock.add(new Fire());
-            stock.add(new PowerUp());
+            enchantments.add(new DamageUp());
+            enchantments.add(new DamageUltra());
+            enchantments.add(new Fire());
+            enchantments.add(new PowerUp());
         } catch (IOException e) {
             System.out.println("Failed to load items into shop: " + e.getMessage());
         }
@@ -57,7 +51,7 @@ public class Shop {
      * @throws NoSuchElementException When the shop doesn't have the item
      */
     public void sellToPlayer(Item item, Player player) throws NoSuchElementException {
-        if(!stock.contains(item)) {
+        if(!stock.contains(item) && !enchantments.contains(item)) {
             throw new NoSuchElementException("Item does not exist in stock");
         }
 

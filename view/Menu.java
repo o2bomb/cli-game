@@ -71,6 +71,10 @@ public class Menu implements MenuEntry {
         return display;
     }
 
+    /**
+     * Generates a displayable string that represents the Player object
+     * @return
+     */
     public String displayPlayerInfo() {
         String display = new String();
         display += "========================= PLAYER STATS =========================\n";
@@ -79,6 +83,16 @@ public class Menu implements MenuEntry {
         display += String.format("Gold: %d\n", game.getPlayer().getGold());
         display += String.format("Equipped Weapon: %s\n", game.getPlayer().getEquippedWeapon().getDisplayName());
         display += String.format("Equipped Armour: %s\n", game.getPlayer().getEquippedArmour().getDisplayName());
+        display += "Healing potions: ";
+        for(int i = 0; i < game.getPlayer().healingPotionCount(); i++) {
+            display += String.format("%s ", new String(Character.toChars(0x2661)));
+        }
+        display += "\n";
+        display += "Damaging potions: ";
+        for(int i = 0; i < game.getPlayer().damagingPotionCount(); i++) {
+            display += String.format("%s ", new String(Character.toChars(0x2620)));
+        }
+        display += "\n";
         display += "================================================================\n";
 
         return display;
@@ -97,6 +111,10 @@ public class Menu implements MenuEntry {
         return description;
     }
 
+    /**
+     * Display all available menu options to the player, and receive
+     * player input for selecting a menu option.
+     */
     @Override
     public void doAction(Scanner sc) {
         while(true) {
