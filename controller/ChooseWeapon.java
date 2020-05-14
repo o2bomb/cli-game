@@ -2,21 +2,33 @@ package controller;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
 
 import model.Player;
 import model.Weapon;
 import view.Menu;
 import view.MenuEntry;
 
-public class ChooseWeapon extends Menu {
+public class ChooseWeapon extends Menu implements PlayerObserver {
     private Player player;
 
     public ChooseWeapon(Player player, Menu prevMenu) {
         super("Choose weapon", prevMenu);
         this.player = player;
+        player.addObserver(this);
         for(Weapon w : player.getWeapons()) {
             addEntry(new ChooseWeaponEntry(w));
         }
+    }
+
+    @Override
+    public void playerUpdated() {
+        List<MenuEntry> newEntries = new ArrayList<>();
+        for(Weapon w : player.getWeapons()) {
+            newEntries.add(new ChooseWeaponEntry(w));
+        }
+        refreshEntries(newEntries);
     }
 
     private class ChooseWeaponEntry implements MenuEntry {
@@ -40,4 +52,5 @@ public class ChooseWeapon extends Menu {
             }
         }
     }
+
 }

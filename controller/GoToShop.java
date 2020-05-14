@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -54,12 +56,22 @@ public class GoToShop extends Menu {
         }
     }
 
-    private class SellAnItem extends Menu {
+    private class SellAnItem extends Menu implements PlayerObserver {
         public SellAnItem(Menu prevMenu) {
             super("Sell an item", prevMenu);
+            player.addObserver(this);
             for(Item i : player.getInventory()) {
                 addEntry(new SellItemEntry(i));
             }
+        }
+
+        @Override
+        public void playerUpdated() {
+            List<MenuEntry> newEntries = new ArrayList<>();
+            for(Item i : player.getInventory()) {
+                newEntries.add(new SellItemEntry(i));
+            }
+            refreshEntries(newEntries);
         }
 
         private class SellItemEntry implements MenuEntry {

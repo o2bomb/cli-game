@@ -86,7 +86,7 @@ public class Shop {
         if(!player.getInventory().contains(item)) {
             throw new NoSuchElementException("Item does not exist in player's inventory. Make sure it is not equipped!");
         }
-        player.getInventory().remove(item);
+        player.removeItem(item);
         player.addGold(item.getCost() / 2);
     }
 }

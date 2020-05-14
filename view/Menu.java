@@ -31,10 +31,25 @@ public class Menu implements MenuEntry {
         entries.add(e);
     }
 
+    /**
+     * Replaces the current entry list with the new entries.
+     * @param entries The new list of entries
+     */
+    public void refreshEntries(List<MenuEntry> newEntries) {
+        ArrayList<MenuEntry> temp = new ArrayList<>();
+        temp.add(this.entries.get(0));
+        temp.addAll(newEntries);
+        this.entries = temp;
+    }
+
     public void removeEntry(int index) {
         entries.remove(index);
     }
 
+    /**
+     * Generates a displayable string that represents the Menu object
+     * @return
+     */
     public String display() {
         String display = new String();
         for(int i = 0; i < entries.size(); i++) {

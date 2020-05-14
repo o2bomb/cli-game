@@ -4,10 +4,13 @@ import java.util.*;
 
 import javax.naming.InsufficientResourcesException;
 
+import controller.PlayerObserver;
+
 public class Player extends Character {
 	private List<Item> inventory;
 	private Weapon equippedWeapon;
 	private Armour equippedArmour;
+	private Set<PlayerObserver> observers;
 
 	public Player(String name) {
 		// DEFAULT STATS:
@@ -23,6 +26,7 @@ public class Player extends Character {
 		inventory = new LinkedList<Item>();
 		equippedWeapon = new BaseWeapon("Wooden sword", 5, 3, 5, "poking", "Sword");
 		equippedArmour = new Armour("T-shirt", 5, "Cloth", 2, 5);
+		observers = new HashSet<>();
 	}
 	
     public Player(String name, int maxHealth, int currHealth, int gold, Weapon weapon, Armour armour) throws NullPointerException {
@@ -31,6 +35,7 @@ public class Player extends Character {
 		// Throws NullPointerException if weapon or armour is null
 		equippedWeapon = Objects.requireNonNull(weapon);
 		equippedArmour = Objects.requireNonNull(armour);
+		observers = new HashSet<>();
 	}
 	
 	public List<Item> getInventory() {
@@ -69,12 +74,19 @@ public class Player extends Character {
 
 	public void addItem(Item item) {
 		inventory.add(item);
+		notifyObservers();
+	}
+
+	public void removeItem(Item item) {
+		inventory.remove(item);
+		notifyObservers();
 	}
 
 	public void addEnchantmentToEquippedWeapon(Enchantment enchantment) {
 		enchantment.setNext(equippedWeapon);
 		Weapon enchantedWeapon = enchantment;
 		this.equippedWeapon = enchantedWeapon;
+		notifyObservers();
 	}
 
 	public void payGold(int amount) throws InsufficientResourcesException {
@@ -82,6 +94,7 @@ public class Player extends Character {
 			throw new InsufficientResourcesException("Player does not have enough gold");
 		}
 		minusGold(amount);
+		notifyObservers();
 	}
 
 	/**
@@ -96,6 +109,7 @@ public class Player extends Character {
 		inventory.add(equippedWeapon);
 		inventory.remove(weapon);
 		equippedWeapon = weapon;
+		notifyObservers();
 	}
 
 	/**
@@ -110,6 +124,24 @@ public class Player extends Character {
 		inventory.add(equippedArmour);
 		inventory.remove(armour);
 		equippedArmour = armour;
+		notifyObservers();
+	}
+
+	/**
+	 * Add a PlayerObserver
+	 * @param ob The player observer
+	 */
+	public void addObserver(PlayerObserver ob) {
+		observers.add(ob);
+	}
+
+	/**
+	 * Calls all observers observing this player object
+	 */
+	public void notifyObservers() {
+		for(PlayerObserver ob : observers) {
+			ob.playerUpdated();
+		}
 	}
 
 	/**
@@ -120,7 +152,8 @@ public class Player extends Character {
 		int defence = equippedArmour.getEffect();
         int damageDealt = Math.max(0, damage - defence);
 
-        currHealth = Math.max(0, currHealth - damageDealt);
+		currHealth = Math.max(0, currHealth - damageDealt);
+		notifyObservers();
 	}
 
 	/**

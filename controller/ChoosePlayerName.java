@@ -15,7 +15,6 @@ public class ChoosePlayerName implements MenuEntry {
 
     @Override
     public void doAction(Scanner sc) {
-        
         while(true) {
             System.out.print("Choose a name for your character: ");
             try {
