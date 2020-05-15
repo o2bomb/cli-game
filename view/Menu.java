@@ -99,6 +99,13 @@ public class Menu implements MenuEntry {
     }
 
     /**
+     * Selects the entry at the specified index
+     */
+    public void select(int index, Scanner sc) {
+        entries.get(index).doAction(sc);
+    }
+
+    /**
      * Clears the console
      */
     public void clearScreen() {
@@ -124,7 +131,7 @@ public class Menu implements MenuEntry {
             try {
                 int choice = Integer.parseInt(sc.nextLine());
                 clearScreen();
-                entries.get(choice).doAction(sc);
+                select(choice, sc);
             } catch(IndexOutOfBoundsException e) {
                 System.out.println("Your choice does not exist.");
             } catch(NumberFormatException e) {

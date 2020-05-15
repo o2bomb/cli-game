@@ -17,6 +17,10 @@ public class Potion implements Item {
         this.maxEffect = maxEffect;
     }
 
+    /**
+     * Returns the type of potion (Damaging/Healing)
+     * @return The type of the potion. Is always a lowercase letter
+     */
     public char getType() {
         return type;
     }

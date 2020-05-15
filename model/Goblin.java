@@ -20,15 +20,28 @@ public class Goblin extends Enemy {
         super(name, maxHealth, currHealth, gold, probability, minDamage, maxDamage, minDefence, maxDefence);
     }
 
+    @Override
+    public String getSpecialDescription() {
+        return "50% chance for the next attack to gain 3 extra damage";
+    }
+
     /**
      * There is a 50% that the attack will have 3 extra damage
      */
     @Override
     public int getDamage() {
         int damage = super.getDamage();
-        if(Math.random() < 0.5) {
+        if(usingSpecial()) {
             damage += 3;
         }
         return damage;
+    }
+
+    @Override
+    public boolean usingSpecial() {
+        if(Math.random() < 0.5) {
+            return true;
+        }
+        return false;
     }
 }

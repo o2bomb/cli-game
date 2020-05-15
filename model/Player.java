@@ -72,6 +72,21 @@ public class Player extends Character {
 		return armours;
 	}
 
+	/**
+	 * Gets all the potions currently in the player's inventory
+	 * @return Potions from the player's inventory
+	 */
+	public List<Potion> getPotions() {
+		List<Potion> potions = new LinkedList<>();
+		for(Item i : inventory) {
+			if(i instanceof Potion) {
+				Potion p = (Potion)i;
+				potions.add(p);
+			}
+		}
+		return potions;
+	}
+
 	public int damagingPotionCount() {
 		int count = 0;
 		for(Item i : inventory) {
@@ -182,12 +197,13 @@ public class Player extends Character {
 	 * Perform a defend based on equipped armour's defence stats
 	 */
 	@Override
-	public void doDefend(int damage) {
+	public int doDefend(int damage) {
 		int defence = equippedArmour.getEffect();
         int damageDealt = Math.max(0, damage - defence);
 
 		currHealth = Math.max(0, currHealth - damageDealt);
 		notifyObservers();
+		return damageDealt;
 	}
 
 	/**

@@ -20,15 +20,28 @@ public class Ogre extends Enemy {
         super(name, maxHealth, currHealth, gold, probability, minDamage, maxDamage, minDefence, maxDefence);
     }
 
+    @Override
+    public String getSpecialDescription() {
+        return "20% chance for two attacks in a row";
+    }
+
     /**
      * There is a 20% chance that it will attack twice in a row
      */
     @Override
     public int getDamage() {
         int damage = super.getDamage();
-        if(Math.random() < 0.2) {
+        if(usingSpecial()) {
             damage += super.getDamage();
         }
         return damage;
+    }
+
+    @Override
+    public boolean usingSpecial() {
+        if(Math.random() < 0.2) {
+            return true;
+        }
+        return false;
     }
 }

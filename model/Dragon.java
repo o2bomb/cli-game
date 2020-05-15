@@ -21,10 +21,19 @@ public class Dragon extends Enemy {
     }
 
     @Override
+    public String getSpecialDescription() {
+        String special = "35% chance for one of the following to occur:\n";
+        special += " - Damage inflicted will double (25% out of 35% chance)\n";
+        special += " - It will recover 10 health (10% out of 35% chance)";
+        return special;
+    }
+
+    @Override
     public int updateProbability() {
+        int probability = getProbability();
         // Do not increase probability if it takes it above 100
         if (probability + 15 > 100) {
-            probability += 15;
+            setProbability(15);
         }
         return probability;
     }
@@ -37,7 +46,7 @@ public class Dragon extends Enemy {
     @Override
     public int getDamage() {
         int damage = super.getDamage();
-        if(Math.random() < 0.35) {
+        if(usingSpecial()) {
             if(Math.random() < (25 / 35)) {
                 damage *= 2; 
             } else {
@@ -45,5 +54,13 @@ public class Dragon extends Enemy {
             }
         }
         return damage;
+    }
+
+    @Override
+    public boolean usingSpecial() {
+        if(Math.random() < 0.35) {
+            return true;
+        }
+        return false;
     }
 }

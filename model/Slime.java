@@ -20,15 +20,28 @@ public class Slime extends Enemy {
         super(name, maxHealth, currHealth, gold, probability, minDamage, maxDamage, minDefence, maxDefence);
     }
 
+    @Override
+    public String getSpecialDescription() {
+        return "20% chance for the next attack miss";
+    }
+
     /**
      * There is a 20% chance that the attack will miss (have no damage)
      */
     @Override
     public int getDamage() {
         int damage = super.getDamage();
-        if(Math.random() < 0.2) {
+        if(usingSpecial()) {
             damage = 0;
         }
         return damage;
+    }
+
+    @Override
+    public boolean usingSpecial() {
+        if(Math.random() < 0.2) {
+            return true;
+        }
+        return false;
     }
 }
