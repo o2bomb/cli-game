@@ -12,8 +12,8 @@ public class GoBack implements MenuEntry {
     }
 
     @Override
-    public void doAction(Scanner sc) {
-        prevMenu.doAction(sc);
+    public boolean doAction(Scanner sc) {
+        return true;
     }
 
     @Override

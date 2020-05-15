@@ -44,12 +44,13 @@ public class ChooseWeapon extends Menu implements PlayerObserver {
         }
 
         @Override
-        public void doAction(Scanner sc) {
+        public boolean doAction(Scanner sc) {
             try {
                 player.selectWeapon(weapon);
             } catch (NoSuchElementException e) {
                 System.out.println("Weapon could not be selected: " + e.getMessage());
             }
+            return true;
         }
     }
 

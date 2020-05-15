@@ -46,12 +46,13 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction(Scanner sc) {
+            public boolean doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(item, player);
                 } catch(NoSuchElementException e) {
                     System.out.println("Failed to purchase item: " + e.getMessage());
                 }
+                return false;
             }
         }
     }
@@ -87,12 +88,13 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction(Scanner sc) {
+            public boolean doAction(Scanner sc) {
                 try {
                     shop.buyFromPlayer(item, player);
                 } catch(NoSuchElementException e) {
                     System.out.println("Failed to sell item: " + e.getMessage());
                 }
+                return false;
             }
         }
     }
@@ -118,12 +120,13 @@ public class GoToShop extends Menu {
             }
 
             @Override
-            public void doAction(Scanner sc) {
+            public boolean doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(enchantment, player);
                 } catch(NoSuchElementException e) {
                     System.out.println("Failed to sell enchantment: " + e.getMessage());
                 }
+                return false;
             }
         }
     }

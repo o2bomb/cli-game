@@ -101,8 +101,8 @@ public class Menu implements MenuEntry {
     /**
      * Selects the entry at the specified index
      */
-    public void select(int index, Scanner sc) {
-        entries.get(index).doAction(sc);
+    public boolean select(int index, Scanner sc) {
+        return entries.get(index).doAction(sc);
     }
 
     /**
@@ -123,15 +123,16 @@ public class Menu implements MenuEntry {
      * player input for selecting a menu option.
      */
     @Override
-    public void doAction(Scanner sc) {
-        while(true) {
+    public boolean doAction(Scanner sc) {
+        boolean dontRepeat = false;
+        while(!dontRepeat) {
             System.out.println("Select an action:");
             System.out.println(displayMenu());
             System.out.println(displayPlayerInfo());
             try {
                 int choice = Integer.parseInt(sc.nextLine());
                 clearScreen();
-                select(choice, sc);
+                dontRepeat = select(choice, sc);
             } catch(IndexOutOfBoundsException e) {
                 System.out.println("Your choice does not exist.");
             } catch(NumberFormatException e) {
@@ -142,5 +143,6 @@ public class Menu implements MenuEntry {
                 System.out.println("Choice scanner failed. Please try again: " + e.getMessage());
             }
         }
+        return false;
     }
 }

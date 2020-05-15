@@ -14,7 +14,7 @@ public class ChoosePlayerName implements MenuEntry {
     }
 
     @Override
-    public void doAction(Scanner sc) {
+    public boolean doAction(Scanner sc) {
         while(true) {
             System.out.print("Choose a name for your character: ");
             try {
@@ -25,6 +25,7 @@ public class ChoosePlayerName implements MenuEntry {
                 System.out.println("Your name cannot be empty.");
             }
         }
+        return false;
     }
 
     @Override

@@ -17,8 +17,9 @@ public class ExitGame implements MenuEntry {
     }
 
     @Override
-    public void doAction(Scanner sc) {
+    public boolean doAction(Scanner sc) {
         game.endGame();
+        return true;
     }
     
 }

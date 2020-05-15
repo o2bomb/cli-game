@@ -39,7 +39,7 @@ public class StartBattle extends Menu {
     }
 
     @Override
-    public void doAction(Scanner sc) {
+    public boolean doAction(Scanner sc) {
         System.out.println(String.format("An enemy appears! Its a %s", enemy.getName()));
         while(true) {
             System.out.println("Select your move:");
@@ -86,6 +86,7 @@ public class StartBattle extends Menu {
             }
         }
         enemy.updateProbability();
+        return false;
     }
 
     private class AttackWith implements MenuEntry {
@@ -97,10 +98,11 @@ public class StartBattle extends Menu {
         }
 
         @Override
-        public void doAction(Scanner sc) {
+        public boolean doAction(Scanner sc) {
             int damage = player.getDamage();
             enemy.doDefend(damage);
             System.out.println(String.format("You deal %d damage to the %s.", damage, enemy.getName()));
+            return false;
         }
     }
 
@@ -135,7 +137,7 @@ public class StartBattle extends Menu {
             }
 
             @Override
-            public void doAction(Scanner sc) {
+            public boolean doAction(Scanner sc) {
                 System.out.println(String.format("You use a %s.", potion.getDisplayName()));
                 int amount = potion.getEffect();
                 if(potion.getType() == 'h') {
@@ -148,6 +150,7 @@ public class StartBattle extends Menu {
                     System.out.println("It does nothing.");
                 }
                 player.removeItem(potion);
+                return true;
             }
         }
     }

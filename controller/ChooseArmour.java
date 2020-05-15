@@ -44,12 +44,13 @@ public class ChooseArmour extends Menu implements PlayerObserver {
         }
 
         @Override
-        public void doAction(Scanner sc) {
+        public boolean doAction(Scanner sc) {
             try {
                 player.selectArmour(armour);
             } catch (NoSuchElementException e) {
                 System.out.println("Armour could not be selected: " + e.getMessage());
             }
+            return true;
         }
 
     }
