@@ -26,9 +26,8 @@ public abstract class Enemy extends Character {
     }
 
     public int updateProbability() {
-        // Do not decrease probability if it takes it below 5%
-        if (probability - 5 < 5)
-            probability -= 5;
+        // Probability can't be below 5
+        probability = Math.max(0, probability - 5);
         return probability;
     }
 

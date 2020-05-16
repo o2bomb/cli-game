@@ -83,4 +83,8 @@ public abstract class Character {
     public void addGold(int amount) {
         this.gold += amount;
     }
+
+    public void fullHeal() {
+        this.currHealth = this.maxHealth;
+    }
 }

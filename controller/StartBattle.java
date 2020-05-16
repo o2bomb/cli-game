@@ -21,7 +21,7 @@ public class StartBattle extends Menu {
         super("Start battle", game);
         this.game = game;
         this.player = game.getPlayer();
-        this.enemy = game.getEnemy();
+        this.enemy = null;
         addEntry(new AttackWith());
         addEntry(new UseAPotion(this));
     }
@@ -33,13 +33,16 @@ public class StartBattle extends Menu {
         display += String.format("Health: %d / %d\n", enemy.getCurrHealth(), enemy.getMaxHealth());
         display += String.format("Gold: %d\n", enemy.getGold());
         display += String.format("Special ability: %s\n", enemy.getSpecialDescription());
+        display += String.format("Chance of encounter: %d\n", enemy.getProbability());
         display += "================================================================\n";
 
-        return display;    
+        return display;
     }
 
     @Override
     public boolean doAction(Scanner sc) {
+        // Get a fresh new enemy
+        this.enemy = game.getEnemy();
         System.out.println(String.format("An enemy appears! Its a %s", enemy.getName()));
         while(true) {
             System.out.println("Select your move:");
@@ -50,14 +53,7 @@ public class StartBattle extends Menu {
                 int choice = Integer.parseInt(sc.nextLine());
                 clearScreen();
                 select(choice, sc);
-                if (player.getCurrHealth() == 0) {
-                    // The player dies
-                    System.out.println("You have been slain!");
-                    // End the game
-                    game.endGame();
-                    // End the battle
-                    break;
-                } else if(enemy.getCurrHealth() == 0) {
+                if(enemy.getCurrHealth() == 0) {
                     // The enemy dies
                     System.out.println(String.format("The %s has been slain!", enemy.getName()));
                     // Award the player gold
@@ -68,6 +64,8 @@ public class StartBattle extends Menu {
                         // The player has defeated the dragon; they win the game
                         game.winGame();
                     }
+                    // Update enemy probability
+                    enemy.updateProbability();
                     // End the battle
                     break;
                 }
@@ -75,6 +73,14 @@ public class StartBattle extends Menu {
                     System.out.println(String.format("The %s is using their special ability!", enemy.getName()));
                 }
                 System.out.println(String.format("The %s deals %d damage to you.", enemy.getName(), player.doDefend(enemy.getDamage())));
+                if (player.getCurrHealth() == 0) {
+                    // The player dies
+                    System.out.println("You have been slain!");
+                    // End the game
+                    game.endGame();
+                    // End the battle
+                    break;
+                }
             } catch(IndexOutOfBoundsException e) {
                 System.out.println("Your choice does not exist.");
             } catch(NumberFormatException e) {
@@ -85,7 +91,6 @@ public class StartBattle extends Menu {
                 System.out.println("Choice scanner failed. Please try again: " + e.getMessage());
             }
         }
-        enemy.updateProbability();
         return false;
     }
 
@@ -99,8 +104,7 @@ public class StartBattle extends Menu {
 
         @Override
         public boolean doAction(Scanner sc) {
-            int damage = player.getDamage();
-            enemy.doDefend(damage);
+            int damage = enemy.doDefend(player.getDamage());
             System.out.println(String.format("You deal %d damage to the %s.", damage, enemy.getName()));
             return false;
         }
@@ -149,6 +153,7 @@ public class StartBattle extends Menu {
                 } else {
                     System.out.println("It does nothing.");
                 }
+                System.out.println(String.format("While you were rummaging through your bag for potions, the %s attacked you!", enemy.getName()));
                 player.removeItem(potion);
                 return true;
             }

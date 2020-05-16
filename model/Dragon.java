@@ -31,10 +31,8 @@ public class Dragon extends Enemy {
     @Override
     public int updateProbability() {
         int probability = getProbability();
-        // Do not increase probability if it takes it above 100
-        if (probability + 15 > 100) {
-            setProbability(15);
-        }
+        // Probability can't be more than 100
+        setProbability(Math.min(100, probability + 15));
         return probability;
     }
 

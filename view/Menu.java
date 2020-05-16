@@ -20,7 +20,7 @@ public class Menu implements MenuEntry {
         this.description = description;
         entries = new ArrayList<>();
         this.game = game;
-        entries.add(new GoBack(prevMenu));
+        entries.add(new GoBack());
     }
 
     public MenuEntry getEntry(int index) {

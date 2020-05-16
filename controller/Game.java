@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -14,14 +14,18 @@ public class Game {
     private Scanner sc;
     private Player player;
     private Shop shop;
-    private List<Enemy> enemies;
+    private ArrayList<Enemy> enemies;
     private boolean isWon;
 
     public Game(Player player, Shop shop, List<Enemy> enemies) throws NullPointerException {
+        // Throws NullPointerException if enemies is null or empty
+        if(enemies.size() == 0) {
+            throw new NullPointerException("enemies cannot be empty");
+        }
+        this.enemies = new ArrayList<>(Objects.requireNonNull(enemies));
         this.sc = new Scanner(System.in);
         this.player = player;
         this.shop = shop;
-        this.enemies = new LinkedList<>(Objects.requireNonNull(enemies));
         this.isWon = false;
     }
 
@@ -34,7 +38,7 @@ public class Game {
         if(isWon) {
             System.out.println("You leave the game, having slain the dragon. The dragon no longer reigns over this world and its citizens, and hopefully they continue to live in a world of peace.");
         } else if(player.getCurrHealth() == 0) {
-            System.out.println("You have been slain and your consciousness is booted from the game. The citizens of this world continue to be terrorised by the dragon.");
+            System.out.println("Your consciousness is booted from the game. The citizens of this world continue to be terrorised by the dragon.");
         } else {
             System.out.println("You escape the game alive, leaving the dragon free will to terrorize the citizens of this world.");
         }
@@ -69,11 +73,25 @@ public class Game {
      * @return The enemy that is most likely to appear next
      */
     public Enemy getEnemy() {
-        for(Enemy e : enemies) {
-            if(Math.random() < e.getProbability()) {
-                return e;
+        int i = 0;
+        if(enemies.size() > 1) {
+            while(true) {
+                i = (int)(Math.random() * (enemies.size()));
+                Enemy e = enemies.get(i);
+                if(Math.random() < (double)e.getProbability() / 100.0) {
+                    int j = 0;
+                    while(j < enemies.size()) {
+                        if(j != i) {
+                            enemies.get(j).updateProbability();
+                        }
+                        j++;
+                    }
+                    e.fullHeal();
+                    return e;
+                }
             }
         }
+        enemies.get(0).fullHeal();
         return enemies.get(0);
     }
 }
