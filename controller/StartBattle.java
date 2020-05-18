@@ -63,6 +63,7 @@ public class StartBattle extends Menu {
                     if(enemy instanceof Dragon) {
                         // The player has defeated the dragon; they win the game
                         game.winGame();
+                        game.endGame();
                     }
                     // Update enemy probability
                     enemy.updateProbability();
