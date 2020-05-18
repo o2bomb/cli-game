@@ -1,7 +1,6 @@
 package model;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import javax.naming.InsufficientResourcesException;
 
@@ -48,24 +47,25 @@ public class Shop {
      * transaction fails
      * @param item The chosen item
      * @param player The player instance
-     * @throws NoSuchElementException When the shop doesn't have the item
+     * @throws ShopException When the shop doesn't have the item
      */
-    public void sellToPlayer(Item item, Player player) throws NoSuchElementException {
+    public void sellToPlayer(Item item, Player player) throws ShopException {
         if(!stock.contains(item) && !enchantments.contains(item)) {
-            throw new NoSuchElementException("Item does not exist in stock");
+            throw new ShopException("Item does not exist in stock");
         }
 
         try {
-            player.payGold(item.getCost());
             if(item instanceof Enchantment) {
                 // If the item is an enchantment, enchant the player's equipped weapon
+                player.payGold(item.getCost());
                 player.addEnchantmentToEquippedWeapon((Enchantment)item);
             } else {
                 // Else, add it to the player's inventory
+                player.payGold(item.getCost());
                 player.addItem(item);
             }
         } catch(InsufficientResourcesException e) {
-            System.out.println("Unable to purchase item from shop: " + e.getMessage());
+            throw new ShopException("Player has insufficient funds", e);
         }
     }
     
@@ -74,11 +74,11 @@ public class Shop {
      * player's inventory, a NoSuchElementException is thrown
      * @param item The chosen item
      * @param player The player instance
-     * @throws NoSuchElementException When the player doesn't own that item
+     * @throws ShopException When the player doesn't own that item
      */
-    public void buyFromPlayer(Item item, Player player) throws NoSuchElementException {
+    public void buyFromPlayer(Item item, Player player) throws ShopException {
         if(!player.getInventory().contains(item)) {
-            throw new NoSuchElementException("Item does not exist in player's inventory. Make sure it is not equipped!");
+            throw new ShopException("Item does not exist in player's inventory. Make sure it is not equipped!");
         }
         player.removeItem(item);
         player.addGold(item.getCost() / 2);

@@ -9,6 +9,7 @@ import model.Enchantment;
 import model.Item;
 import model.Player;
 import model.Shop;
+import model.ShopException;
 import view.Menu;
 import view.MenuEntry;
 
@@ -49,7 +50,7 @@ public class GoToShop extends Menu {
             public boolean doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(item, player);
-                } catch(NoSuchElementException e) {
+                } catch(ShopException e) {
                     System.out.println("Failed to purchase item: " + e.getMessage());
                 }
                 return false;
@@ -91,7 +92,7 @@ public class GoToShop extends Menu {
             public boolean doAction(Scanner sc) {
                 try {
                     shop.buyFromPlayer(item, player);
-                } catch(NoSuchElementException e) {
+                } catch(ShopException e) {
                     System.out.println("Failed to sell item: " + e.getMessage());
                 }
                 return false;
@@ -123,7 +124,7 @@ public class GoToShop extends Menu {
             public boolean doAction(Scanner sc) {
                 try {
                     shop.sellToPlayer(enchantment, player);
-                } catch(NoSuchElementException e) {
+                } catch(ShopException e) {
                     System.out.println("Failed to sell enchantment: " + e.getMessage());
                 }
                 return false;
