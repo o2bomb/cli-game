@@ -1,5 +1,5 @@
-# OOSE Assignment
-This is my assignment for OOSE. It is a turned-based combat game that utilizes various object-oriented design patterns in its implementation.
+# Turn-based CLI Game
+A turned-based combat game that utilizes various object-oriented design patterns in its implementation.
 
 ## How to run the game
 In order for the game to work, you must have the JDK installed. This game was built using openjdk 11.0.7, on a machine running Ubuntu 18.04:
